@@ -73,13 +73,14 @@ The inspiration for this project comes from the **Jenkins-Zero-to-Hero** reposit
 ## **How the Pipeline Works?**
 ```mermaid
 graph TD;
-    Developer--Push Code-->GitHub;
-    GitHub--Trigger Jenkins-->Jenkins;
-    Jenkins--Build & Test-->Maven;
-    Maven--Analyze Code-->SonarQube;
-    SonarQube--Feedback-->Jenkins;
-    Jenkins--Build Image-->Docker;
-    Docker--Push Image-->DockerHub;
-    Jenkins--Update Deployment YAML-->GitHub;
-    GitHub--ArgoCD Detects Change-->ArgoCD;
-    ArgoCD--Deploy to K8s-->Kubernetes Cluster;
+    A[Developer] -->|Push Code| B[GitHub];
+    B -->|Trigger Build| C[Jenkins];
+    C -->|Build & Test| D[Maven];
+    D -->|Analyze Code| E[SonarQube];
+    E -->|Feedback| C;
+    C -->|Build Image| F[Docker];
+    F -->|Push Image| G[DockerHub];
+    C -->|Update Deployment YAML| H[GitHub Deployment Repo];
+    H -->|ArgoCD Detects Change| I[ArgoCD];
+    I -->|Deploy Application| J[Kubernetes Cluster];
+
